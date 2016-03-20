@@ -1,19 +1,19 @@
 {
-  "name": "jhipster-uml",
+  "name": "vagabond-uml",
   "version": "1.6.4",
-  "description": "UML support for JHipster via XMI and JDL files",
+  "description": "UML support for Vagabond via XMI and JDL files",
   "bin": {
-    "jhipster-uml": "./jhipster-uml.js"
+    "vagabond-uml": "./vagabond-uml.js"
   },
   "keywords": [
-    "generator-jhipster",
+    "generator-vagabond",
     "UML",
     "XMI",
     "JSON",
     "JDL"
   ],
-  "homepage": "https://github.com/jhipster/jhipster-uml",
-  "bugs": "https://github.com/jhipster/jhipster-uml/issues",
+  "homepage": "https://github.com/hakandilek/vagabond-uml",
+  "bugs": "https://github.com/hakandilek/vagabond-uml/issues",
   "author": {
     "name": "Mathieu Abou-Aichi",
     "email": "",
@@ -22,7 +22,7 @@
   "main": "module/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/jhipster/jhipster-uml.git"
+    "url": "git://github.com/hakandilek/vagabond-uml.git"
   },
   "scripts": {
     "test": "mocha test/*"

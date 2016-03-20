@@ -25,7 +25,8 @@ Paste it here!
 
 ### Versions
 
-| JHipster           | JHipster UML           |
+| Vagabond           | Vagabond UML           |
 | ------------------ | ---------------------- |
 | `JHipster Version` |    `jhipster-uml -v`   |
+| `Vagabond Version` | `vagabond-uml -v` |
 

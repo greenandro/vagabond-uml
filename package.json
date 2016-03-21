@@ -36,10 +36,18 @@
     "pegjs": "0.9.0"
   },
   "devDependencies": {
+    "chai": "3.5.0",
+    "chalk": "^1.1.1",
+    "eslint": "^2.4.0",
+    "fs": "0.0.2",
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.2.0",
     "jscover": "1.0.0",
+    "jsonlint": "^1.6.2",
+    "minimist": "^1.2.0",
     "mocha": "2.4.5",
     "mocha-lcov-reporter": "1.2.0",
-    "chai": "3.5.0"
+    "require-dir": "^0.3.0"
   },
   "peerDependencies": {},
   "engines": {

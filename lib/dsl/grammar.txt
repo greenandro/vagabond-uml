@@ -147,20 +147,34 @@ subPagiDecl
 
 // Service
 serviceDecl
-  = 'service' space+ decl:subServiceDecl space* ex:exclusion? space* JDLComment? {
-  	service[decl[decl.length - 1]] = service[decl[decl.length - 1]] || { list: [], excluded: [] };
-    concat(service[decl[decl.length - 1]].list, decl.slice(0, decl.length-1));
-    if (ex) {
-    	concat(service[decl[decl.length - 1]].excluded, ex);
-    }
+  = jd:Comment? space* JDLComment? space* "service" space* s:SERVICENAME space* sb:serviceBody? space* JDLComment? {
+    return {"name" : s, "body":sb, "javadoc":jd};
+  }
+  / "service" space* s:SERVICENAME space* sb:serviceBody? {
+    return {"name" : s, "body":sb, "javadoc":""};
   }
 
-subServiceDecl
-  = e:ENTITYNAME space* ',' space* sub:subServiceDecl {return concat([e], sub);}
-  / '*' space* 'with' space* method:([A-z-]+) {return ['*', method.toString().replace(/,/g,'')];}
-  / 'all' space* 'with' space* method:([A-z-]+) {return ['*', method.toString().replace(/,/g,'')];}
-  / e:ENTITYNAME space* 'with' space* method:([A-z-]+) {return [e, method.toString().replace(/,/g,'')];}
+serviceBody
+  = "{" space* JDLComment? space* mdl:methodDeclList space* JDLComment? space* "}" {return mdl;}
+  / "" {return [];}
 
+methodDeclList
+  = JDLComment? space* com:Comment? space* JDLComment? space* t:type mn:METHODNAME space* "(" space* pl:parameterList? space* ")" mdl:methodDeclList {
+    return concat([{"name" : mn, "type" : t, "parameters" : pl, "javadoc": com}], mdl );
+  }
+  / com:Comment? space* t:type mn:METHODNAME space* "(" space* pl:parameterList? space* ")" {
+    return [{"name" : mn, "type" : t, "parameters" : pl, "javadoc": com}];
+  }
+  / "" {return [];}                                                
+
+parameterList
+  = p:parameter space* "," space* pl:parameterList {return concat([p], pl);}                                    
+  / "" {return [];}
+
+parameter
+  = t:type pn:PARAMETERNAME {
+    return { "name": pn, "type": t };
+  }                                    
 
 relationshipType = "OneToOne" {return "one-to-one";} / "OneToMany" {return "one-to-many";} / "ManyToOne" {return "many-to-one";} / "ManyToMany" {return "many-to-many";}
 
@@ -200,6 +214,15 @@ ENTITYNAME "an entity name"
   = head:[A-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}
 
 FIELDNAME "a field name"
+  = head:[a-zA-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}               
+
+SERVICENAME "a service name"  
+  = head:[A-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}
+
+METHODNAME "a method name"
+  = head:[a-zA-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}               
+
+PARAMETERNAME "a parameter name"
   = head:[a-zA-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}               
 
 space "a space"

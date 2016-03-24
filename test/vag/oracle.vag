@@ -108,4 +108,6 @@ paginate Job with pagination
 
 dto Employee with mapstruct
 
-service Employee with serviceClass
+service SampleManager {
+  Task assign(Employee employee, Task task)
+}

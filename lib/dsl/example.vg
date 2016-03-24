@@ -108,8 +108,6 @@ paginate Job with pagination
 
 dto Employee with mapstruct
 
-service Employee with serviceClass
-
 service Manager {
   void assign(Department department, Employee employee)
   Long countEmployees()

@@ -3,11 +3,13 @@ entity Department {
   departmentName String required
 }
 
+@paginate(infinite-scroll)
 entity JobHistory {
   startDate ZonedDateTime,
   endDate ZonedDateTime
 }
 
+@paginate(pagination)
 entity Job {
   jobId Long,
   jobTitle String,
@@ -18,6 +20,8 @@ entity Job {
 /**
  * The Employee entity.
  */
+@dto(mapstruct)
+@paginate(infinite-scroll)
 entity Employee {
   employeeId Long,
   /**
@@ -102,11 +106,6 @@ relationship OneToOne {
 relationship OneToOne {
   Country{region} to Region
 }
-
-paginate JobHistory, Employee with infinite-scroll
-paginate Job with pagination
-
-dto Employee with mapstruct
 
 service Manager {
   void assign(Department department, Employee employee)

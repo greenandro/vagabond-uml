@@ -4,6 +4,8 @@ entity C {}
 
 dto * with mapstruct
 
-service * with serviceClass
-
 paginate * with pager
+
+service S {
+  C assign(A a)
+}

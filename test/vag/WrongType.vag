@@ -1,0 +1,16 @@
+entity Department{
+	departmentName String
+}
+
+entity Employee{
+	firstName String,
+	lastName WrongType
+}
+
+relationship OneToMany{
+	Department{employee} to Employee{department}
+}
+
+service SampleManager {
+  Employee assign(Employee employee, WrongType wrong)
+}

@@ -8,25 +8,25 @@ var ParserFactory = require('../../lib/editors/parser_factory'),
     CassandraTypes = require('../../lib/types/cassandra_types');
 
 var parser = ParserFactory.createParser({
-  file: 'test/jh/oracle.jh',
+  file: 'test/vag/oracle.vag',
   databaseType: 'sql'
 });
 
 /* The parser with an undeclared entity in a relationship */
 var parserUndeclaredEntity = ParserFactory.createParser({
-  file: 'test/jh/UndeclaredEntity.jh',
+  file: 'test/vag/UndeclaredEntity.vag',
   databaseType: 'sql'
 });
 
 /* The parser with a wrong type */
 var parserWrongType = ParserFactory.createParser({
-  file: 'test/jh/WrongType.jh',
+  file: 'test/vag/WrongType.vag',
   databaseType: 'sql'
 });
 
 /* The parser with an enum */
 var parserEnum = ParserFactory.createParser({
-  file: 'test/jh/enum.jh',
+  file: 'test/vag/enum.vag',
   databaseType: 'sql'
 });
 
@@ -60,7 +60,7 @@ describe("DSL Parser", function(){
     describe('when trying to add a field whose name is capitalized', function() {
       it('decapitalizes and adds it', function() {
         var otherParser = ParserFactory.createParser({
-          file: 'test/jh/capitalized_field_name.jh',
+          file: 'test/vag/capitalized_field_name.vag',
           databaseType: 'sql'
         });
         otherParser.fillClassesAndFields();
@@ -138,7 +138,7 @@ describe("DSL Parser", function(){
       describe("and using the '*' keyword", function() {
         it('assigns the option for each entity', function() {
           var parser = ParserFactory.createParser({
-            file: 'test/jh/all_keyword_1.jh',
+            file: 'test/vag/all_keyword_1.vag',
             databaseType: 'sql'
           });
           var parsedData = parser.parse();
@@ -146,14 +146,14 @@ describe("DSL Parser", function(){
           Object.keys(parsedData.classes).forEach(function(className) {
             expect(parsedData.getClass(className).dto).to.eq('mapstruct');
             expect(parsedData.getClass(className).pagination).to.eq('pager');
-            expect(parsedData.getClass(className).service).to.eq('serviceClass');
+            expect(parsedData.getClass(className).service).to.eq('no');
           });
         });
       });
       describe("and using the 'all' keyword", function() {
         it('assigns the option for each entity', function() {
           var parser = ParserFactory.createParser({
-            file: 'test/jh/all_keyword_2.jh',
+            file: 'test/vag/all_keyword_2.vag',
             databaseType: 'sql'
           });
           var parsedData = parser.parse();
@@ -161,14 +161,14 @@ describe("DSL Parser", function(){
           Object.keys(parsedData.classes).forEach(function(className) {
             expect(parsedData.getClass(className).dto).to.eq('mapstruct');
             expect(parsedData.getClass(className).pagination).to.eq('pager');
-            expect(parsedData.getClass(className).service).to.eq('serviceClass');
+            expect(parsedData.getClass(className).service).to.eq('no');
           });
         });
       });
       describe("and using the 'except' keyword", function() {
         it("doesn't set the option to the excluded entity", function() {
           var parser = ParserFactory.createParser({
-            file: 'test/jh/except_keyword.jh',
+            file: 'test/vag/except_keyword.vag',
             databaseType: 'sql'
           });
           var parsedData = parser.parse();
@@ -180,7 +180,7 @@ describe("DSL Parser", function(){
           expect(parsedData.getClass('B').pagination).to.eq('no');
           expect(parsedData.getClass('C').pagination).to.eq('no');
           expect(parsedData.getClass('A').service).to.eq('no');
-          expect(parsedData.getClass('B').service).to.eq('serviceClass');
+          expect(parsedData.getClass('B').service).to.eq('no');
           expect(parsedData.getClass('C').service).to.eq('no');
         });
       });

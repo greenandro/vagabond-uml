@@ -1,5 +1,5 @@
-entity Departement{
-	departementName String
+entity Department{
+	departmentName String
 }
 
 entity Employee{
@@ -13,5 +13,9 @@ entity Employee{
 }
 
 relationship OneToMany{
-	WrongEntity{employee} to Employee{departement}
+	WrongEntity{employee} to Employee{department}
+}
+
+service SampleManager {
+  Employee assign(Employee employee, WrongEntity wrong)
 }

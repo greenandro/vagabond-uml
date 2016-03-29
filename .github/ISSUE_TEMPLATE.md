@@ -1,6 +1,7 @@
 ### The issue
 
 
+
 ---
 #### The stacktrace
 
@@ -26,5 +27,4 @@ Paste it here!
 
 | Vagabond           | Vagabond UML           |
 | ------------------ | ---------------------- |
-| `Vagabond Version` | `Vagabond UML version` |
-
+| `Vagabond Version` |    `vagabond-uml -v`   |

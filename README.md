@@ -1,5 +1,7 @@
 ![version](https://badge.fury.io/js/vagabond-uml.svg)
-[![Build Status](https://travis-ci.org/hakandilek/vagabond-uml.svg?branch=master)](https://travis-ci.org/hakandilek/vagabond-uml) [![Dependencies status](https://david-dm.org/hakandilek/vagabond-uml.svg)](https://david-dm.org/hakandilek/vagabond-uml)
+[![Build Status](https://travis-ci.org/hakandilek/vagabond-uml.svg?branch=master)](https://travis-ci.org/hakandilek/vagabond-uml) 
+[![Dependencies status](https://david-dm.org/hakandilek/vagabond-uml.svg)](https://david-dm.org/hakandilek/vagabond-uml)
+[![devDependency Status](https://david-dm.org/jhipster/jhipster-uml/dev-status.svg)](https://david-dm.org/jhipster/jhipster-uml#info=devDependencies)
 
 # Welcome to Vagabond-UML!
 

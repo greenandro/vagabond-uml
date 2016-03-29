@@ -1,6 +1,6 @@
 {
   "name": "vagabond-uml",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "UML support for Vagabond via XMI and JDL files",
   "bin": {
     "vagabond-uml": "./vagabond-uml.js"
@@ -30,11 +30,11 @@
   },
   "dependencies": {
     "chalk": "1.1.1",
-    "underscore.string": "3.3.4",
     "deasync": "0.1.4",
     "inquirer": "0.12.0",
-    "xml2js": "0.4.16",
-    "pegjs": "0.9.0"
+    "lodash": "4.6.1",
+    "pegjs": "0.9.0",
+    "xml2js": "0.4.16"
   },
   "devDependencies": {
     "jscover": "1.0.0",
@@ -44,8 +44,8 @@
   },
   "peerDependencies": {},
   "engines": {
-    "node": ">=0.10.25",
-    "npm": ">=1.4.21"
+    "node": ">=4.0.0",
+    "npm": ">=2.14.2"
   },
   "license": "Apache-2.0",
   "licenses": [

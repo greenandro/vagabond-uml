@@ -30,6 +30,12 @@ var parserEnum = ParserFactory.createParser({
   databaseType: 'sql'
 });
 
+/* The parser with an enum */
+var parserAnnotations = ParserFactory.createParser({
+  file: 'test/vag/annotations.vag',
+  databaseType: 'sql'
+});
+
 describe("DSL Parser", function(){
   describe("#fillClassesAndFields", function(){
     describe("when the classes and fields are created",function(){

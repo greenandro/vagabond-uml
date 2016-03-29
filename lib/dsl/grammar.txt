@@ -65,8 +65,8 @@ prog
 
 //Entities
 entityDecl
-  = jd:Comment? space* JDLComment? space* "entity" space* e:ENTITYNAME space* eb:entityBody? space* JDLComment? {return {"name" : e, "body":eb, "javadoc":jd};}
-  / "entity" space* e:ENTITYNAME space* eb:entityBody? {return {"name" : e, "body":eb, "javadoc":""};}           
+  = jd:Comment? space* JDLComment? space* ann:annotationList? space* "entity" space* e:ENTITYNAME space* eb:entityBody? space* JDLComment? {return {"name" : e, "body":eb, "javadoc":jd, "annotations":ann};}
+  / ann:annotationList? space* "entity" space* e:ENTITYNAME space* eb:entityBody? {return {"name" : e, "body":eb, "javadoc":"", "annotations":ann};}           
  
 entityBody
   = "{" space* JDLComment? space* fdl:fieldDeclList space* JDLComment? space* "}" {return fdl;}
@@ -80,6 +80,39 @@ fieldDeclList
 validationList
   = v:validation space* vl:validationList {return concat([v], vl);}                                    
   / "" {return [];}
+
+//Annotations
+
+annotationList
+  = a:annotation space* al:annotationList {return concat([a], al);}                                    
+  / "" {return [];}
+
+annotation
+  = jd:Comment? space* JDLComment? space* "@" n:ANNOTATIONNAME space* p:annotationBody space* JDLComment? {
+    return {"name" : n, "parameters":p, "javadoc":jd};
+  }
+  / "@" n:ANNOTATIONNAME space* p:annotationBody? {
+    return {"name" : n, "parameters":p, "javadoc":""};
+  }
+
+annotationBody
+  = "(" space* apl:annotationParameterList space* ")" {
+    return apl;
+  }
+  / "(" space* ")" {
+    return [];
+  }
+  / "" {
+    return [];
+  }
+
+annotationParameterList
+  = ap:annotationParameter space* "," space* apl:annotationParameterList {return concat([ap], apl);}                                    
+  / "" {return [];}
+
+annotationParameter
+  = n:ANNOTATIONPARAMNAME { return { "name" : n, "value" : true }; }
+  / n:ANNOTATIONPARAMNAME space* "=" space* v:ANNOTATIONPARAMVALUE { return { "name" : n, "value" : v }; }
 
 //Relationship
 relationDecl
@@ -191,8 +224,6 @@ validation
   / "min" space* "(" space* int:INTEGER space* ")" {return {key:'min', value:int};}
   / "pattern" space* "("  apostrophe regexp:REGEXP  apostrophe space* ")" {return {key:'pattern' , value:regexp};}
 
-
-
 apostrophe "apostrophe"
   = a:["|']                    
 
@@ -226,6 +257,16 @@ METHODNAME "a method name"
 PARAMETERNAME "a parameter name"
   = head:[a-zA-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}               
 
+ANNOTATIONNAME "an annotation name"  
+  = head:[a-zA-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}
+
+ANNOTATIONPARAMNAME "an annotation parameter name"  
+  = head:[a-zA-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}
+
+ANNOTATIONPARAMVALUE "an annotation parameter value"  
+  = v:ENUMPROP {return v; }
+  / v:Literal {return v; }
+
 space "a space"
   = space:['\n'|'\t'|'\r'|' '|\u2028|\u2029]+ 
 
@@ -241,3 +282,100 @@ ComStop = [*]+ "/"
 JDLComment = "//" [^\n\r]*
 
 Not_Com = (!ComStop !ComStart char:.) {return char;}
+
+/********************     LITERALS           **********************************/
+Literal
+  = NullLiteral
+  / BooleanLiteral
+  / NumericLiteral
+  / StringLiteral
+
+NullLiteral
+  = NullToken { return { type: "Literal", value: null }; }
+
+BooleanLiteral
+  = TrueToken  { return { type: "Literal", value: true  }; }
+  / FalseToken { return { type: "Literal", value: false }; }
+
+NumericLiteral "number"
+  = literal:HexIntegerLiteral !DecimalDigit {
+      return literal;
+    }
+  / literal:DecimalLiteral !DecimalDigit {
+      return literal;
+    }
+
+DecimalLiteral
+  = DecimalIntegerLiteral "." DecimalDigit* ExponentPart? {
+      return { type: "Literal", value: parseFloat(text()) };
+    }
+  / "." DecimalDigit+ ExponentPart? {
+      return { type: "Literal", value: parseFloat(text()) };
+    }
+  / DecimalIntegerLiteral ExponentPart? {
+      return { type: "Literal", value: parseFloat(text()) };
+    }
+
+DecimalIntegerLiteral
+  = "0"
+  / NonZeroDigit DecimalDigit*
+
+DecimalDigit
+  = [0-9]
+
+NonZeroDigit
+  = [1-9]
+
+ExponentPart
+  = ExponentIndicator SignedInteger
+  
+ExponentIndicator
+  = "e"i
+
+SignedInteger
+  = [+-]? DecimalDigit+
+
+HexIntegerLiteral
+  = "0x"i digits:$HexDigit+ {
+      return { type: "Literal", value: parseInt(digits, 16) };
+     }
+
+HexDigit
+  = [0-9a-f]i
+
+StringLiteral "string"
+  = '"' chars:char* '"' {
+      return chars.join("");
+    }
+  / "'" chars:char* "'" {
+      return chars.join("");
+    }
+
+char
+  = unescaped
+  / escape
+    sequence:(
+        '"'
+      / "\\"
+      / "/"
+      / "b" { return "\b"; }
+      / "f" { return "\f"; }
+      / "n" { return "\n"; }
+      / "r" { return "\r"; }
+      / "t" { return "\t"; }
+      / "u" digits:$(HEXDIG HEXDIG HEXDIG HEXDIG) {
+          return String.fromCharCode(parseInt(digits, 16));
+        }
+    )
+    { return sequence; }
+
+escape         = "\\"
+unescaped      = [^\0-\x1F\x22\x5C]
+
+/* See RFC 4234, Appendix B (http://tools.ietf.org/html/rfc4627). */
+DIGIT  = [0-9]
+HEXDIG = [0-9a-f]i
+
+NullToken       = "null"       
+TrueToken       = "true"       
+FalseToken      = "false"      

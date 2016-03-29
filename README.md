@@ -14,7 +14,7 @@ We support: Modelio, UML Designer, GenMyModel and Visual Paradigm... and our DSL
   - [x] Entity model
   - [x] Service model
   - [ ] Relation model
-  - [ ] Annotation model
+  - [?] Annotation model
   - [ ] XMI support
   - [ ] UML Designer
     

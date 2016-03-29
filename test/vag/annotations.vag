@@ -1,0 +1,32 @@
+@paginate(pagination)
+entity Book{
+  String name
+  String description required
+}
+
+@dto(mapstruct)
+@paginate(infinite-scroll)
+entity MultipleAnnotations {
+  String name
+  DateTime date
+}
+
+@noParams
+entity A {
+  String name
+}
+
+@noParams()
+entity A2 {
+  String name
+}
+
+@multiParams(a,B,c)
+entity B {
+  String name
+}
+
+@multiParams(a=true,B="asd",c=123)
+entity B2 {
+  String name
+}

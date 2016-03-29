@@ -11,8 +11,8 @@ We support: Modelio, UML Designer, GenMyModel and Visual Paradigm... and our DSL
 ## TODO
   Here is a brief roadmap
   
-  - [ ] Entity model
-  - [ ] Service model
+  - [x] Entity model
+  - [x] Service model
   - [ ] Relation model
   - [ ] Annotation model
   - [ ] XMI support

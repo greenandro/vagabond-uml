@@ -1,15 +1,15 @@
 entity Department{
-	departmentName String
+	String departmentName
 }
 
 entity Employee{
-	firstName String,
-	lastName String,
-	email String,
-	phoneNumber String,
-	hireDAte DateTime,
-	salary Long,
-	comissionPct Long
+	String firstName,
+	String lastName,
+	String email,
+	String phoneNumber,
+	DateTime hireDAte,
+	Long salary,
+	Long comissionPct
 }
 
 relationship OneToMany{

@@ -1,3 +1,3 @@
 entity ClassA {
-  Name String
+  String Name
 }

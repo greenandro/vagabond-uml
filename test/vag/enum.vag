@@ -3,14 +3,14 @@ JAVA, PHP, GOGO, GROOVY
 }
 
 entity Book{
-name String,
-description String required,
-language Language required
+String name
+String description required
+Language language required
 }
 
 entity Author {
-  name String,
-  date DateTime
+  String name
+  DateTime date
 }
 
 relationship OneToMany{

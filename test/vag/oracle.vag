@@ -1,59 +1,59 @@
 entity Department {
-  departmentId Long,
-  departmentName String required
+  Long departmentId
+  String departmentName required
 }
 
 entity JobHistory {
-  startDate ZonedDateTime,
-  endDate ZonedDateTime
+  ZonedDateTime startDate,
+  ZonedDateTime endDate
 }
 
 entity Job {
-  jobId Long,
-  jobTitle String,
-  minSalary Long,
-  maxSalary Long
+  Long jobId
+  String jobTitle
+  Long minSalary
+  Long maxSalary
 }
 
 /**
  * The Employee entity.
  */
 entity Employee {
-  employeeId Long,
+  Long employeeId
   /**
    * The firstname attribute.
    */
-  firstName String,
-  lastName String,
-  email String,
-  phoneNumber String,
-  hireDate ZonedDateTime,
-  salary Long,
-  commissionPct Long
+  String firstName
+  String lastName
+  String email
+  String phoneNumber
+  ZonedDateTime hireDate,
+  Long salary
+  Long commissionPct
 }
 
 entity Location {
-  locationId Long,
-  streetAddress String,
-  postalCode String,
-  city String,
-  stateProvince String
+  Long locationId
+  String streetAddress
+  String postalCode
+  String city
+  String stateProvince
 }
 
 entity Task {
-  taskId Long,
-  title String,
-  description String
+  Long taskId
+  String title
+  String description
 }
 
 entity Country {
-  countryId Long,
-  countryName String
+  Long countryId,
+  String countryName
 }
 
 entity Region {
-  regionId Long,
-  regionName String
+  Long regionId,
+  String regionName
 }
 
 relationship OneToOne {

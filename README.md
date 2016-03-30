@@ -1,4 +1,4 @@
-![version](https://badge.fury.io/js/vagabond-uml.svg)
+[![npm](https://badge.fury.io/js/vagabond-uml.svg)](https://npmjs.org/package/vagabond-uml)
 [![Build Status](https://travis-ci.org/hakandilek/vagabond-uml.svg?branch=master)](https://travis-ci.org/hakandilek/vagabond-uml) 
 [![Dependencies status](https://david-dm.org/hakandilek/vagabond-uml.svg)](https://david-dm.org/hakandilek/vagabond-uml)
 

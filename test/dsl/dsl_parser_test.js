@@ -228,57 +228,6 @@ describe("DSL Parser", function(){
       });
     });
 
-    describe('when generating entities with options', function() {
-      describe("and using the '*' keyword", function() {
-        it('assigns the option for each entity', function() {
-          var parser = ParserFactory.createParser({
-            file: 'test/vag/all_keyword_1.vag',
-            databaseType: 'sql'
-          });
-          var parsedData = parser.parse();
-          expect(Object.keys(parsedData.classes).length).to.eq(3);
-          Object.keys(parsedData.classes).forEach(function(className) {
-            expect(parsedData.getClass(className).dto).to.eq('mapstruct');
-            expect(parsedData.getClass(className).pagination).to.eq('pager');
-            expect(parsedData.getClass(className).service).to.eq('no');
-          });
-        });
-      });
-      describe("and using the 'all' keyword", function() {
-        it('assigns the option for each entity', function() {
-          var parser = ParserFactory.createParser({
-            file: 'test/vag/all_keyword_2.vag',
-            databaseType: 'sql'
-          });
-          var parsedData = parser.parse();
-          expect(Object.keys(parsedData.classes).length).to.eq(3);
-          Object.keys(parsedData.classes).forEach(function(className) {
-            expect(parsedData.getClass(className).dto).to.eq('mapstruct');
-            expect(parsedData.getClass(className).pagination).to.eq('pager');
-            expect(parsedData.getClass(className).service).to.eq('no');
-          });
-        });
-      });
-      describe("and using the 'except' keyword", function() {
-        it("doesn't set the option to the excluded entity", function() {
-          var parser = ParserFactory.createParser({
-            file: 'test/vag/except_keyword.vag',
-            databaseType: 'sql'
-          });
-          var parsedData = parser.parse();
-          expect(Object.keys(parsedData.classes).length).to.eq(3);
-          expect(parsedData.getClass('A').dto).to.eq('no');
-          expect(parsedData.getClass('B').dto).to.eq('no');
-          expect(parsedData.getClass('C').dto).to.eq('mapstruct');
-          expect(parsedData.getClass('A').pagination).to.eq('pager');
-          expect(parsedData.getClass('B').pagination).to.eq('no');
-          expect(parsedData.getClass('C').pagination).to.eq('no');
-          expect(parsedData.getClass('A').service).to.eq('no');
-          expect(parsedData.getClass('B').service).to.eq('no');
-          expect(parsedData.getClass('C').service).to.eq('no');
-        });
-      });
-    });
   });
 });
 

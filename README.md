@@ -16,11 +16,10 @@ We support: Modelio, UML Designer, GenMyModel and Visual Paradigm... and our DSL
   - [ ] Relation model
   - [ ] Annotation model
     - [x] Entity level annotations
+    - [x] Use entity level annotations instead of 
+      - [x] `dto` 
+      - [x] `pagination` definitions
     - [ ] Field level annotations
-    - [ ] Use annotations instead of 
-      - [ ] `dto` 
-      - [ ] `pagination` and
-      - [ ] `service` definitions
   - [ ] XMI support
   - [ ] UML Designer
     

@@ -108,11 +108,12 @@ annotationBody
 
 annotationParameterList
   = ap:annotationParameter space* "," space* apl:annotationParameterList {return concat([ap], apl);}                                    
+  / ap:annotationParameter {return [ap];}                                    
   / "" {return [];}
 
 annotationParameter
-  = n:ANNOTATIONPARAMNAME { return { "name" : n, "value" : true }; }
-  / n:ANNOTATIONPARAMNAME space* "=" space* v:ANNOTATIONPARAMVALUE { return { "name" : n, "value" : v }; }
+  = n:ANNOTATIONPARAMNAME space* "=" space* v:ANNOTATIONPARAMVALUE { return { "name" : n, "value" : v }; }
+  / n:ANNOTATIONPARAMNAME { return { "name" : n, "value" : true }; }
 
 //Relationship
 relationDecl
@@ -225,7 +226,7 @@ validation
   / "pattern" space* "("  apostrophe regexp:REGEXP  apostrophe space* ")" {return {key:'pattern' , value:regexp};}
 
 apostrophe "apostrophe"
-  = a:["|']                    
+  = a:["|']
 
 REGEXP "a regular expression" 
   = word:[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':\\|,.<>\/? ]* {return makeString(word);}
@@ -234,7 +235,10 @@ ENUMNAME "an enum name"
   = head:[A-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}
 
 ENUMPROP "an enum property"
-  = underscore:[_]*head:[A-Z0-9]tail:[A-Z0-9_]* {return makeString(concat(concat(underscore,[head]), tail));}
+  = underscore:[_]*head:[A-Z0-9]tail:[A-Z0-9_]* {
+    var prop = makeString(concat(concat(underscore,[head]), tail));
+    return prop;
+  }
 
 INTEGER "integer"
   = int:[0-9]+ {return parseInt(int.join(""), 10);} 
@@ -261,11 +265,11 @@ ANNOTATIONNAME "an annotation name"
   = head:[a-zA-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}
 
 ANNOTATIONPARAMNAME "an annotation parameter name"  
-  = head:[a-zA-Z]tail:[a-zA-Z0-9]* {return makeString(concat([head],tail));}
+  = head:[a-zA-Z]tail:[a-zA-Z0-9\-_]* {return makeString(concat([head],tail));}
 
 ANNOTATIONPARAMVALUE "an annotation parameter value"  
-  = v:ENUMPROP {return v; }
-  / v:Literal {return v; }
+  = v:Literal { return v; }
+  / v:ENUMPROP { return v; }
 
 space "a space"
   = space:['\n'|'\t'|'\r'|' '|\u2028|\u2029]+ 
@@ -291,29 +295,32 @@ Literal
   / StringLiteral
 
 NullLiteral
-  = NullToken { return { type: "Literal", value: null }; }
+  = NullToken { return null; }
 
 BooleanLiteral
-  = TrueToken  { return { type: "Literal", value: true  }; }
-  / FalseToken { return { type: "Literal", value: false }; }
+  = TrueToken  { return true; }
+  / FalseToken { return false; }
 
 NumericLiteral "number"
-  = literal:HexIntegerLiteral !DecimalDigit {
+  = literal:HexIntegerLiteral {
       return literal;
     }
-  / literal:DecimalLiteral !DecimalDigit {
+  / literal:DecimalLiteral {
       return literal;
     }
 
 DecimalLiteral
   = DecimalIntegerLiteral "." DecimalDigit* ExponentPart? {
-      return { type: "Literal", value: parseFloat(text()) };
+      var literal = parseFloat(text());
+      return literal;
     }
   / "." DecimalDigit+ ExponentPart? {
-      return { type: "Literal", value: parseFloat(text()) };
+      var literal = parseFloat(text());
+      return literal;
     }
   / DecimalIntegerLiteral ExponentPart? {
-      return { type: "Literal", value: parseFloat(text()) };
+      var literal = parseFloat(text());
+      return literal;
     }
 
 DecimalIntegerLiteral
@@ -337,7 +344,7 @@ SignedInteger
 
 HexIntegerLiteral
   = "0x"i digits:$HexDigit+ {
-      return { type: "Literal", value: parseInt(digits, 16) };
+      return parseInt(digits, 16);
      }
 
 HexDigit
@@ -345,10 +352,12 @@ HexDigit
 
 StringLiteral "string"
   = '"' chars:char* '"' {
-      return chars.join("");
+      var literal = chars.join("");
+      return literal;
     }
   / "'" chars:char* "'" {
-      return chars.join("");
+      var literal = chars.join("");
+      return literal;
     }
 
 char

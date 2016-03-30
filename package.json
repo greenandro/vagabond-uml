@@ -15,9 +15,9 @@
   "homepage": "https://github.com/hakandilek/vagabond-uml",
   "bugs": "https://github.com/hakandilek/vagabond-uml/issues",
   "author": {
-    "name": "Mathieu Abou-Aichi",
+    "name": "Hakan Dilek",
     "email": "",
-    "url": "https://github.com/MathieuAA"
+    "url": "https://github.com/hakandilek"
   },
   "main": "module/index.js",
   "repository": {

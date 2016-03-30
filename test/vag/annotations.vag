@@ -12,7 +12,7 @@ entity MultipleAnnotations {
 }
 
 @noParams
-entity A {
+entity A1 {
   String name
 }
 
@@ -21,12 +21,18 @@ entity A2 {
   String name
 }
 
-@multiParams(a,B,c)
-entity B {
+@multiParams(a, B,c1)
+entity B1 {
   String name
 }
 
-@multiParams(a=true,B="asd",c=123)
+enum Lang {
+  EN,DE,FR
+}
+
+@multiParams(a=true,B= "asd", 
+    c =42, d=3.41, e, 
+    f = EN, g=null, h)
 entity B2 {
   String name
 }

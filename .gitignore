@@ -10,3 +10,4 @@ coverage/*
 sonar-project.properties
 
 #generated
+src/

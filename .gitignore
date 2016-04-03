@@ -7,6 +7,6 @@ out/
 .vagabond/
 .sonar
 coverage/*
+sonar-project.properties
 
 #generated
-src/
